@@ -41,7 +41,7 @@ export default class SupportCommand extends Command {
         Data dump from ${formatDate(Date.now())}
         `;
         
-        console.info("Paste the following data into the support channel: ", "```" + data + "```");
+        console.info("Paste the following data into the support channel:", "```" + data + "```");
         return Promise.resolve();
     }
 }
