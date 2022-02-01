@@ -189,11 +189,12 @@ async function handlePacket(packetId: number, player: Player, data: any): Promis
  */
 export default class Server {
     private readonly initialKey: Buffer = undefined;
-    private readonly provider: DataProvider = undefined;
     private readonly pluginManager: PluginManager = createPluginManager();
+    private provider: DataProvider = undefined;
     private token: number = 0x00000000; // TODO: Determine if this needs to be moved to the player class.
     private players: object = {};
 
+    readonly crashDumps: object[] = [];
     versionData: Version = undefined;
     unhandledPackets: number[] = [];
 
@@ -201,8 +202,17 @@ export default class Server {
         // The initial XOR key for the game (2.0-2.6).
         this.initialKey = Buffer.from(readFileSync(`${base}/resources/initial-key.bin`).toString(), "base64");
         // This loads the data required for handling the specified version.
-        this.versionData = <Version>require(`${working}/versions/${config.server.clientVersion}.json`);
+        this.versionData = <Version> require(`${working}/versions/${config.server.clientVersion}.json`);
 
+        this.startup(); // Begin the startup sequence.
+    }
+
+    /**
+     * Called after constructor is called.
+     * Should be called after the server is instantiated.
+     * @private For internal invocation only.
+     */
+    private async startup(): Promise<void> {
         // Load plugins.
         this.pluginManager.registerAllPlugins();
 
