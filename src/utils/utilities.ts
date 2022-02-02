@@ -30,7 +30,7 @@ export function randomNumber(min: number, max: number): number {
  * @param time The time to format from {@link Date#now}.
  * @return The time formatted as: `[year]-[month]-[day] [hour]:[minute]:[second].[millisecond]`.
  */
-export function formatDate(time: number): string {
+export function formatDate(time: number, useColons: boolean = true): string {
     const date = new Date(time);
 
     const year = date.getFullYear();
@@ -41,7 +41,8 @@ export function formatDate(time: number): string {
     const second = date.getSeconds();
     const millisecond = date.getMilliseconds();
 
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}.${millisecond}`;
+    const separator: string = useColons ? ":" : ".";
+    return `${year}-${month}-${day} ${hour}${separator}${minute}${separator}${second}.${millisecond}`;
 }
 
 /**
