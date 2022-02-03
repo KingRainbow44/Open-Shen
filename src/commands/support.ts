@@ -22,6 +22,7 @@ import {base, config, mode} from "../index";
 import {existsSync} from "fs";
 import {execSync} from "child_process";
 import {formatDate} from "../utils/utilities";
+import {server} from "../server";
 
 export default class SupportCommand extends Command {
     constructor() {
@@ -30,6 +31,12 @@ export default class SupportCommand extends Command {
 
     async execute(args: string[], player?: Player): Promise<void> {
         // Collect the data.
+        let dumpData: string = "";
+        const crashes: object[] = server.crashDumps;
+        for(let i = 0; i < Math.min(crashes.length, 3); i++) {
+            dumpData += `\nLatest dump #${i + 1}:${JSON.stringify(crashes[i])}`;
+        } if(dumpData.length == 0) dumpData = "No crash dumps found.";
+        
         const data: string = `
         Running in mode: ${mode == "precompile" ? "development" : "release"}
         Running: ${existsSync(`${base}/.git`) ? `from source code on Git (build: ${execSync("git describe --tags --always --dirty", {encoding: "utf-8"}).trim()})` : "from a packaged executable"}
@@ -39,6 +46,7 @@ export default class SupportCommand extends Command {
         Debug status: ${config.debug.enableDebug ? `enabled (level ${config.debug.debugLevel})` : "disabled"}
         Specified data provider: ${config.data.dataProvider}
         Data dump from ${formatDate(Date.now())}
+        Latest crash dumps: ${dumpData}
         `;
         
         console.info("Paste the following data into the support channel:", "```" + data + "```");
