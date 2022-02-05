@@ -16,7 +16,7 @@
  * credit is given to the original author(s).
  */
 
-import Player from "../player/Player";
+import Player from "../player/player";
 import {jsonToObject} from "../utils/packets";
 
 export default async function (data, player: Player): Promise<void> {

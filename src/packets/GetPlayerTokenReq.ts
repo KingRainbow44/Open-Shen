@@ -16,7 +16,7 @@
  * credit is given to the original author(s).
  */
 
-import Player from "../player/Player";
+import Player from "../player/player";
 import {PlayerTokenRequest} from "../utils/protocol";
 import {generateKey} from "../utils/keygen";
 

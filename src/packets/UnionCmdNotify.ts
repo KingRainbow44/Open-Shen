@@ -16,7 +16,7 @@
  * credit is given to the original author(s).
  */
 
-import Player from "../player/Player";
+import Player from "../player/player";
 import {UnionCmdNotify} from "../utils/protocol";
 import {Color} from "../utils/constants";
 import * as protocol from "../utils/packets";

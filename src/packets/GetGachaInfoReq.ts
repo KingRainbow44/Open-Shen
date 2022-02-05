@@ -16,20 +16,20 @@
  * credit is given to the original author(s).
  */
 
-import Player from "../player/Player";
+import Player from "../player/player";
 import {GachaConfig, GachaInfo} from "../utils/interfaces";
 import {configs} from "../index";
 import {ServerConstants} from "../utils/constants";
 
 const gachaInfo = ((function (): object {
     const gachaConfig: GachaConfig = configs.gachaConfig;
-    const gachaInfo = {gachaInfoList: <GachaInfo[]>[], gachaRandom: 3596445971};
+    const gachaInfo = {gachaInfoList: <GachaInfo[]> [], gachaRandom: 3596445971};
 
     const {maxTimes, types} = gachaConfig.gacha;
     const {currency, tenPull, onePull} = gachaConfig.costs;
     const {start, end} = gachaConfig.time;
 
-    gachaConfig.gacha.types.forEach(type => {
+    types.forEach(type => {
         const info: GachaInfo = ServerConstants.GACHA_TYPES[type];
         info.gachaTimesLimit = maxTimes;
         info.leftGachaTimes = maxTimes; // TODO: Properly implement.

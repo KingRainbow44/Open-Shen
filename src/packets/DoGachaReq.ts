@@ -16,7 +16,7 @@
  * credit is given to the original author(s).
  */
 
-import Player from "../player/Player";
+import Player from "../player/player";
 import {DoGachaRequest, DoGachaResponse} from "../utils/protocol";
 import {BannerData, Gacha} from "../utils/interfaces";
 import {randomNumber} from "../utils/utilities";

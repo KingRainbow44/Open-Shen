@@ -16,7 +16,7 @@
  * credit is given to the original author(s).
  */
 
-import Player from "../player/Player";
+import Player from "../player/player";
 
 export default async function (data, player: Player): Promise<void> {
     const nickname = data.nickName;
