@@ -27,7 +27,7 @@ import {parseUri} from "./utils";
  * @route /...
  */
 export function handleUnrouted(request: Request, response: Response) {
-    const url: string = parseUri(request.url); console.log(request.url);
+    const url: string = parseUri(request.url);
     let responseData: any = staticRoutes[url] || {retcode: 0, code: 0};
     if(responseData instanceof Object)
         responseData = JSON.stringify(responseData);

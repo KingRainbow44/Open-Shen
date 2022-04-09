@@ -21,13 +21,15 @@
  */
 
 import {Request, Response, NextFunction} from "express";
+import * as logger from "../utils/logger";
+import {Color} from "../utils/constants";
 
 /**
  * Logs an incoming HTTP request.
  * @param next The next function in the middleware chain.
  */
 export function logRequest(req: Request, res: Response, next: NextFunction) {
-    console.log(req.url); // TODO: Implement proper request logging.
+    logger.debug(Color.GREEN(), `[HTTP] Request to: ${req.path}`);
     next(); // Invoke the next function in the chain.
 }
 

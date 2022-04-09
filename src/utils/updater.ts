@@ -32,7 +32,7 @@ export function updateConfig(): void {
     copyFileSync(`${base}/resources/default-configs/config.json`, `${working}/config.json`);
 
     // Replace the values in the new config with existing ones.
-    const newConfig: Config = require(`${working}/config.json`);
+    let newConfig: Config = require(`${working}/config.json`);
     Object.assign(newConfig, current);
 
     // Save the existing-updated config to the file.
