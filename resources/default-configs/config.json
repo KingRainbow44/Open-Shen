@@ -1,0 +1,10 @@
+{
+  "debug": {
+    "enableDebug": false,
+    "debugLevel": 1
+  },
+  "server": {
+    "udpPort": 22102
+  },
+  "version": 1
+}

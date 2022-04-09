@@ -1,0 +1,37 @@
+{
+  "name": "open-shen",
+  "description": "An open-source server software for a certain anime game.",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "bin": "src/index.js",
+  "scripts": {
+    "package": "tsc && pkg --compress GZip --debug .",
+    "debug": "tsc && node src/index.js precompile"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "better-sqlite3": "^7.5.0",
+    "fs-extra": "^10.0.1",
+    "node-kcp-x": "^1.0.1",
+    "dgram": "^1.0.1",
+    "protobufjs": "^6.11.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3",
+    "@types/node": "^17.0.23",
+    "@types/express": "^4.17.13",
+    "@types/fs-extra": "^9.0.13",
+    "@types/better-sqlite3": "^7.5.0",
+    "pkg": "^5.6.0"
+  },
+  "pkg": {
+    "assets": [
+      "resources/default-configs/*.json",
+      "resources/static/*.ejs"
+    ],
+    "outputPath": "build",
+    "targets": [
+      "node16-windows-x64"
+    ]
+  }
+}
