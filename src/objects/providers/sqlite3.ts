@@ -27,11 +27,17 @@ export default class SQLite3Provider implements DataProvider {
     
     constructor(credentials: object) {
         const databaseFile: string = credentials["file"] || "database";
-        this.database = new Database(`${working}/${databaseFile}.sqlite3`);
+        this.database = new Database(`${working}/${databaseFile}.db`);
+    }
+    
+    initializeDatabase(): Promise<void> {
+        this.database.query('CREATE TABLE IF NOT EXISTS `players` (`uid` VARCHAR(10) PRIMARY KEY, `data` LONGTEXT, `inventory` LONGTEXT);');
+        this.database.query('CREATE TABLE IF NOT EXISTS `accounts` (`uid` VARCHAR(10) PRIMARY KEY, `name` VARCHAR(64), `data` LONGTEXT);');
+        return Promise.resolve();
     }
 
     playerDataExists(uid: string): Promise<boolean> {
-        return Promise.resolve(this.database.fetch(`SELECT * FROM players WHERE uid = '${uid}';`).length == 1);
+        return Promise.resolve(this.database.fetch(`SELECT * FROM players WHERE uid = '${uid}';`) != undefined);
     }
     
     createPlayerData(uid: string, data: Account): Promise<void> {

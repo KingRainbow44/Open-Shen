@@ -114,7 +114,7 @@ export default class Player {
 
         let playerData: Account;
         const dataProvider: DataProvider = server.getDataProvider();
-        if(!dataProvider.playerDataExists(uid)) {
+        if(!(await dataProvider.playerDataExists(uid))) {
             dataProvider.createPlayerData(uid, defaultPlayerData(uid));
             playerData = defaultPlayerData(uid);
         } else playerData = <Account> await dataProvider.getPlayerData(uid);

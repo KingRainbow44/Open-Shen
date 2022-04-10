@@ -202,6 +202,8 @@ export default class Server {
         // TODO: Call after loading all plugins (when implemented).
         // Create a data provider instance.
         this.provider = createProviderInstance();
+        // Initialize the data provider.
+        this.provider.initializeDatabase();
     }
 
     /**

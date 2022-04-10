@@ -29,6 +29,9 @@ import {base, config} from "../index";
  * All methods should return a {@link Promise} with an object.
  */
 export default interface DataProvider {
+    /* Database initialization. */
+    initializeDatabase(): Promise<void>;
+    
     /* Player data handling. */
     playerDataExists(uid: string): Promise<boolean>;
     getPlayerData(uid: string): Promise<Account>;
@@ -50,7 +53,7 @@ export function createProviderInstance(): DataProvider {
     
     let dataProvider: DataProvider;
     try {
-        let provider: any = require(registeredProviders[providerName]);
+        let provider: any = require(registeredProviders[providerName]).default;
         dataProvider = new provider(providerCredentials);
     } catch (error: any) {
         console.error(`Failed to create data provider instance.`, error);
