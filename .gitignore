@@ -1,0 +1,14 @@
+# IDEs
+.idea/
+.vscode/
+
+# NodeJS Libraries
+node_modules/
+
+# TypeScript Output
+**/*.js.map
+**/*.js
+tsconfig.tsbuildinfo
+
+# pkg Builds
+build/

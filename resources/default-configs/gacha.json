@@ -1,0 +1,18 @@
+{
+  "gacha": {
+    "types": [0],
+    "maxTimes": 10
+  },
+  "costs": {
+    "currency": {
+      "standard": 224,
+      "limited": 223
+    },
+    "tenPull": 10,
+    "onePull": 1
+  },
+  "time": {
+    "start": "-1",
+    "end": "100"
+  }
+}

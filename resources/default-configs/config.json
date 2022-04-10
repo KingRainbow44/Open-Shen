@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "enableDebug": false,
+    "debugLevel": 1,
+    "useRawPackets": false,
+    "logPackets": false
+  },
+  "server": {
+    "udpPort": 22102,
+    "clientVersion": "2.0"
+  },
+  "logger": {
+    "ignoredPacketIds": []
+  },
+  "data": {
+    "dataProvider": "sqlite3",
+    "providerCredentials": {}
+  },
+  "version": 3
+}
