@@ -27,7 +27,7 @@ export default async function (data, player: Player): Promise<void> {
                 uid: 1337,
                 toUid: player.info.uid,
                 isRead: false,
-                text: "Welcome to Bridge! Use this to execute commands."
+                text: "Welcome to Open Shen! Use this to execute commands."
             }
         ]
     });
