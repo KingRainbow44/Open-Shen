@@ -98,7 +98,7 @@ export async function processPacket(data: Buffer, rInfo: RemoteInfo) {
         let noMagic: Buffer = protocol.parsePacketData(remaining); // Parse the packet and remove magic bytes.
         if (!isNaN(protocol.getFrameworkById(packetId))) {
             logger.debug(36, `[UDP] Received unknown packet ${packetId}`);
-            writeFileSync(`${base}/unknown/${packetId}.packet`, remaining.toString('base64'));
+            writeFileSync(`${working}/unknown/${packetId}.packet`, remaining.toString('base64'));
             return;
         }
 

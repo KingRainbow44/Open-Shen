@@ -66,9 +66,20 @@ export function createStructure(): void {
         process.exit(0);
     }
     
+    // Packets directory.
+    if(!existsSync(`${working}/packets`)) {
+        mkdirSync(`${working}/packets`); mkdirSync(`${working}/rawPackets`);
+        console.warn(`Before running, add '.json' files to the '${working}/packets' directory.`);
+        process.exit(0);
+    }
+    
     // Logs directory.
     if(!existsSync(`${working}/logs`))
         mkdirSync(`${working}/logs`);
+    // Configs directory.
     if(!existsSync(`${working}/configs`))
         mkdirSync(`${working}/configs`);
+    // Unknown directory
+    if(!existsSync(`${working}/unknown`))
+        mkdirSync(`${working}/unknown`);
 }
