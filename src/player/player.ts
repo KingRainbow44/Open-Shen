@@ -233,23 +233,25 @@ class NetworkAdapter {
      * @param sceneToken The scene token for the packet.
      */
     enterSceneNotification(sceneToken: number): PlayerEnterSceneInfoNotify {
-        const player: Player = this.getPlayer();
-        return {
-            enterSceneToken: sceneToken,
-            curAvatarEntityId: player.entityObj.entityId,
-            avatarEnterInfo: [],
-
-            teamEnterInfo: {
-                teamEntityId: 150995686,
-                teamAbilityInfo: {},
-                abilityControlBlock: {}
-            },
-            mpLevelEntityInfo: {
-                entityId: 184550127,
-                authorityPeerId: 1,
-                abilityInfo: {}
-            }
-        };
+        return jsonToObject("PlayerEnterSceneInfoNotify");
+        // TODO: Fully implement after testing.
+        // const player: Player = this.getPlayer();
+        // return {
+        //     enterSceneToken: sceneToken,
+        //     curAvatarEntityId: player.entityObj.entityId,
+        //     avatarEnterInfo: [],
+        //
+        //     teamEnterInfo: {
+        //         teamEntityId: 150995686,
+        //         teamAbilityInfo: {},
+        //         abilityControlBlock: {}
+        //     },
+        //     mpLevelEntityInfo: {
+        //         entityId: 184550127,
+        //         authorityPeerId: 1,
+        //         abilityInfo: {}
+        //     }
+        // };
     }
 
     /**

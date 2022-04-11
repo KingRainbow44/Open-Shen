@@ -17,9 +17,10 @@
  */
 
 import Player from "../player/player";
-import {Entity, Statistics, User} from "../utils/interfaces";
+import {Entity, SceneAvatar, Statistics, User} from "../utils/interfaces";
 import {SceneEntityAppearNotify, SceneTeamUpdateNotify} from "../utils/protocol";
 import {jsonToObject} from "../utils/packets";
+import {SceneAvatarGenerator} from "../player/generators";
 
 class World {
     network: NetworkAdapter = new NetworkAdapter(this);
@@ -35,8 +36,10 @@ class World {
             this.hostUid = parseInt(player.info.uid);
 
         // Assign the player entity IDs.
-        for (let i = 0; i < 4; i++)
+        for (let i = 0; i < 8; i++)
             player.entityIds[i] = this.entityManager.allocateEntityId();
+        // Enter the world as the player.
+        this.entityManager.enter(player);
     }
 
     removePlayer(player: Player) {
@@ -154,7 +157,7 @@ class World {
 class EntityManager {
     world: World;
     entities: object = {};
-    nextEntityId: number = 0;
+    nextEntityId: number = 16777959; // TODO: Revert to 0 after implementation.
 
     /**
      * Creates a world entity manager.
@@ -220,8 +223,9 @@ class EntityManager {
      * @return A packet to be broadcast to players.
      */
     enter(player: Player): object {
-        // TODO: Use entity IDs from player to construct scene avatar.
-        // TODO: Create entity generator for player data.
+        const entityIds: number[] = player.entityIds;
+        const generated: SceneAvatar = new SceneAvatarGenerator(player).build(0);
+        player.entityObj = generated.sceneEntityInfo;
         // TODO: Create proper scene team update notify packet.
         return {};
     }

@@ -150,8 +150,8 @@ export interface Friend {
 }
 
 export interface Property {
-    type: number;
-    propValue?: PropertyValue;
+    propType?: number; type?: number;
+    propValue?: PropertyValue|number;
 }
 
 export interface Entity {
@@ -166,7 +166,7 @@ export interface Entity {
     };
     propList: Property[];
     fightPropList: Property[];
-    animationParaList: object[];
+    animatorParaList: object[];
 
     avatar: Avatar;
     entityClientData: object;
@@ -183,12 +183,18 @@ export interface Avatar {
     avatarId: number;
     guid: string;
     peerId: number;
+    equipIdList: number[];
     skillDepotId: number;
 
     wearingFlycloakId: number;
     bornTime: number;
+    excelInfo: Excel;
 
     weapon: Weapon;
+    reliquaryList: object[];
+    inherentProudSkillList: number[];
+    skillLevelMap: object;
+    teamResonanceList: number[];
 }
 
 export interface SceneAvatar {
@@ -204,6 +210,7 @@ export interface SceneAvatar {
     avatarGuid: string;
     weaponEntityId: number;
     entityId: number;
+    isPlayerCurAvatar: boolean;
 }
 
 export interface Character {
@@ -267,11 +274,11 @@ export interface BannerData {
 
 export interface PropertyValue {
     /* ival = Integer; fval = Float */
-    ival?: number;
-    fval?: number;
+    ival?: string|number;
+    fval?: string|number;
 
-    type: number;
-    val?: number;
+    type: string|number;
+    val?: string|number;
 }
 
 export interface ItemEntry {
@@ -295,4 +302,12 @@ export interface Equip {
 export interface Material {
     count: number;
     deleteInfo: object;
+}
+
+export interface Excel {
+    prefabPathHash: string;
+    prefabPathRemoteHash: string;
+    controllerPathHash: string;
+    controllerPathRemoteHash: string;
+    combatConfigHash: string;
 }

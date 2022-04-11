@@ -52,6 +52,267 @@ export class PlayerConstants {
     };
 }
 
+export class GeneratorConstants {
+    static readonly ABILITY_EMBRYO_LIST = [
+        {
+            "abilityId": 2,
+            "abilityNameHash": 4291357363,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 3,
+            "abilityNameHash": 664564586,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 4,
+            "abilityNameHash": 4172444990,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 5,
+            "abilityNameHash": 1578170661,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 6,
+            "abilityNameHash": 918348879,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 7,
+            "abilityNameHash": 1410219662,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 8,
+            "abilityNameHash": 1474894886,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 9,
+            "abilityNameHash": 3832178184,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 10,
+            "abilityNameHash": 2306062007,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 11,
+            "abilityNameHash": 3105629177,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 12,
+            "abilityNameHash": 3771526669,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 13,
+            "abilityNameHash": 100636247,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 14,
+            "abilityNameHash": 1564404322,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 15,
+            "abilityNameHash": 497711942,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 16,
+            "abilityNameHash": 1142761247,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 17,
+            "abilityNameHash": 518324758,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 18,
+            "abilityNameHash": 3276790745,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 19,
+            "abilityNameHash": 3429175060,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 20,
+            "abilityNameHash": 3429175061,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 21,
+            "abilityNameHash": 4253958193,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 22,
+            "abilityNameHash": 209033715,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 23,
+            "abilityNameHash": 900298203,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 24,
+            "abilityNameHash": 127390306,
+            "abilityOverrideNameHash": 1178079449
+        },
+        {
+            "abilityId": 25,
+            "abilityNameHash": 825255509,
+            "abilityOverrideNameHash": 1178079449
+        }
+    ];
+    static readonly FIGHT_PROP_LIST = [
+        {
+            "propType": 1,
+            "propValue": 1363.1275634765625
+        },
+        {
+            "propType": 4,
+            "propValue": 59.55296325683594
+        },
+        {
+            "propType": 6
+        },
+        {
+            "propType": 7,
+            "propValue": 85.55137634277344
+        },
+        {
+            "propType": 20,
+            "propValue": 0.07100000232458115
+        },
+        {
+            "propType": 21
+        },
+        {
+            "propType": 22,
+            "propValue": 0.5
+        },
+        {
+            "propType": 23,
+            "propValue": 1
+        },
+        {
+            "propType": 26
+        },
+        {
+            "propType": 27
+        },
+        {
+            "propType": 28
+        },
+        {
+            "propType": 29
+        },
+        {
+            "propType": 30
+        },
+        {
+            "propType": 40
+        },
+        {
+            "propType": 41
+        },
+        {
+            "propType": 42
+        },
+        {
+            "propType": 43
+        },
+        {
+            "propType": 44
+        },
+        {
+            "propType": 45
+        },
+        {
+            "propType": 46
+        },
+        {
+            "propType": 50
+        },
+        {
+            "propType": 51
+        },
+        {
+            "propType": 52
+        },
+        {
+            "propType": 53
+        },
+        {
+            "propType": 54
+        },
+        {
+            "propType": 55
+        },
+        {
+            "propType": 56
+        },
+        {
+            "propType": 74,
+            "propValue": 60
+        },
+        {
+            "propType": 2000,
+            "propValue": 1363.1275634765625
+        },
+        {
+            "propType": 2001,
+            "propValue": 59.55296325683594
+        },
+        {
+            "propType": 2002,
+            "propValue": 85.55137634277344
+        },
+        {
+            "propType": 2003
+        },
+        {
+            "propType": 1004,
+            "propValue": 2
+        },
+        {
+            "propType": 1010,
+            "propValue": 1363.1275634765625
+        }
+    ];
+    
+    static readonly EXCEL_LIST = {
+        amber: {
+            prefabPathHash: "1049031694485",
+            prefabPathRemoteHash: "1053359340965",
+            controllerPathHash: "336094165345",
+            controllerPathRemoteHash: "822233630114",
+            combatConfigHash: "152079964069"
+        }
+    };
+    static readonly WEAPON_LIST = {
+        test: {
+            entityId: 100664042,
+            gadgetId: 50015101,
+            itemId: 15101,
+            guid: "2681193339516092493",
+            level: 1,
+            abilityInfo: {}
+        }
+    };
+}
+
 export class Color {
     static BLACK(foreground: boolean = true): number {
         return foreground ? 30 : 40;
