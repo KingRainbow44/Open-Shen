@@ -31,7 +31,9 @@
     "assets": [
       "resources/default-configs/*.json",
       "resources/static/*.ejs",
-      "resources/**"
+      "resources/**",
+      
+      "node_modules/**/*"
     ],
     "outputPath": "build",
     "targets": [
