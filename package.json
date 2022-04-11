@@ -1,7 +1,7 @@
 {
   "name": "open-shen",
   "description": "An open-source server software for a certain anime game.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   
   "main": "src/index.ts",
   "bin": "src/index.js",
