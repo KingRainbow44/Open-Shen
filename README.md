@@ -1,5 +1,5 @@
 # Open-Shen
-An open-source server software for a certain anime game.
+An open-source server software for a certain anime gaem.
 *Based off the leaked Pancake and closed-source Bridge servers.*
 
 You can find the Open-Shen community [here](https://discord.gg/sJ7VatCYvZ)!
