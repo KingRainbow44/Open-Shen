@@ -40,7 +40,7 @@ console.debug = (message: any, ...args: any[]): void => debug(Color.BLUE(), mess
  */
 export function info(color: string | number = 0, message: string, ...args: any[]): void {
     logger(`\x1b[${color}m${"[INFO] " + message}\x1b[0m`, ...args);
-    logToFile(`[INFO] ${formatDate(Date.now())}: ${message}`, `latest`, true);
+    logToFile(`[INFO] ${formatDate(Date.now())}: ${args.length > 0 ? message + args.join(" ") : message}`, `latest`, true);
 }
 
 /**
@@ -51,7 +51,7 @@ export function info(color: string | number = 0, message: string, ...args: any[]
  */
 export function warn(color: string | number = 0, message: string, ...args: any[]): void {
     logger(`\x1b[${color}m${"[WARN] " + message}\x1b[0m`, ...args);
-    logToFile(`[WARN] ${formatDate(Date.now())}: ${message}`, `latest`, true);
+    logToFile(`[WARN] ${formatDate(Date.now())}: ${args.length > 0 ? message + args.join(" ") : message}`, `latest`, true);
 }
 
 /**
@@ -62,7 +62,7 @@ export function warn(color: string | number = 0, message: string, ...args: any[]
  */
 export function error(color: string | number = 0, message: string, ...args: any[]): void {
     logger(`\x1b[${color}m${"[ERROR] " + message}\x1b[0m`, ...args);
-    logToFile(`[ERROR] ${formatDate(Date.now())}: ${message}`, `latest`, true);
+    logToFile(`[ERROR] ${formatDate(Date.now())}: ${args.length > 0 ? message + args.join(" ") : message}`, `latest`, true);
 }
 
 /**
@@ -72,7 +72,7 @@ export function error(color: string | number = 0, message: string, ...args: any[
  * @param args Other objects to log.
  */
 export function debug(color: string | number, message: string, ...args: any[]): void {
-    logToFile(`[DEBUG] ${formatDate(Date.now())}: ${message}`, `latest`, true);
+    logToFile(`[DEBUG] ${formatDate(Date.now())}: ${args.length > 0 ? message + args.join(" ") : message}`, `latest`, true);
     if (config.debug.enableDebug) {
         logger(`\x1b[${color}m${"[DEBUG] " + message}\x1b[0m`, ...args);
     }
@@ -85,7 +85,7 @@ export function debug(color: string | number, message: string, ...args: any[]): 
  * @param args Other objects to log.
  */
 export function verbose(color: string | number, message: string, ...args: any[]): void {
-    logToFile(`[VERBOSE] ${formatDate(Date.now())}: ${message}`, `latest`, true)
+    logToFile(`[VERBOSE] ${formatDate(Date.now())}: ${args.length > 0 ? message + args.join(" ") : message}`, `latest`, true)
     if (config.debug.enableDebug && config.debug.debugLevel > 1) {
         logger(`\x1b[${color}m${"[VERBOSE] " + message}\x1b[0m`, ...args);
     }
