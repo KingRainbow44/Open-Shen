@@ -28,18 +28,23 @@ import {
     Statistics,
     User
 } from "../utils/interfaces";
-import {PlayerDataNotify, PlayerEnterSceneInfoNotify, PlayerStoreNotify} from "../utils/protocol";
-import {PlayerConstants} from "../utils/constants";
+import {
+    PlayerDataNotify,
+    PlayerEnterSceneInfoNotify,
+    PlayerEnterSceneNotify,
+    PlayerStoreNotify
+} from "../utils/protocol";
 import World from "../world/world";
+import ServerEntity from "../world/entity";
+import DataProvider from "../objects/provider";
+import {PlayerConstants} from "../utils/constants";
 
-import {base64Decode, base64Encode} from "../utils/utilities";
 import {binaryToObject, bufferToPacket, getIdFromFramework, jsonToObject, objectToBuffer} from "../utils/packets";
 import {debug, logToFile, verbose} from "../utils/logger";
 import {config} from "../index";
 import {server} from "../server";
-import DataProvider from "../objects/provider";
 
-export default class Player {
+export default class Player extends ServerEntity {
     kcpObj: KCP;
     address: Address;
 
@@ -55,7 +60,6 @@ export default class Player {
 
     /* Value holders. */
     entityIds: number[] = [];
-    entityObj: Entity;
 
     /* Debug holder. */
     chatMessages: object = {};
@@ -64,6 +68,8 @@ export default class Player {
      * @param kcp This is the KCP client object assigned when the player is created.
      */
     constructor(kcp: KCP) {
+        super(null);
+        
         this.kcpObj = kcp;
         this.network = new NetworkAdapter(this);
     }
@@ -156,6 +162,22 @@ export default class Player {
     sendMessage(message: string, uid: string = "1"): void {
         // TODO: Send chat message packet.
     }
+
+    /**
+     * Returns the player's UID.
+     * @return A UID as a string.
+     */
+    getUid(): string {
+        return this.info.uid;
+    }
+
+    /**
+     * Returns the player's UID.
+     * @return A UID as a number.
+     */
+    getUniqueIdentifier(): number {
+        return parseInt(this.info.uid);
+    }
 }
 
 /**
@@ -184,13 +206,14 @@ class DataAdapter {
     avatarData(avatar: number): Character {
         if (avatar < 0 || avatar > 3)
             throw new Error(`Invalid avatar ID: ${avatar}`);
+        const player: Player = this.player;
         return {
-            avatarAbilityInfo: undefined,
-            avatarEntityId: 0,
-            avatarGuid: "",
-            weaponAbilityInfo: undefined,
-            weaponEntityId: 0,
-            weaponGuid: ""
+            avatarAbilityInfo: {},
+            avatarEntityId: player.entityIds[avatar],
+            avatarGuid: "2681193339516092492",
+            weaponAbilityInfo: {},
+            weaponEntityId: player.entityIds[avatar + 4],
+            weaponGuid: "2681193339516092493"
         };
     }
 }
@@ -232,14 +255,18 @@ class NetworkAdapter {
      * Creates an 'PlayerEnterSceneInfoNotify' packet.
      * @param sceneToken The scene token for the packet.
      */
-    enterSceneNotification(sceneToken: number): PlayerEnterSceneInfoNotify {
+    enterSceneInfoNotification(sceneToken: number): PlayerEnterSceneInfoNotify {
         return jsonToObject("PlayerEnterSceneInfoNotify");
-        // TODO: Fully implement after testing.
         // const player: Player = this.getPlayer();
+        // const avatarEnterInfo: Character[] = [];
+        //
+        // for(let i = 0; i < 4; i++)
+        //     avatarEnterInfo.push(player.data.avatarData(i));
+        //
         // return {
         //     enterSceneToken: sceneToken,
         //     curAvatarEntityId: player.entityObj.entityId,
-        //     avatarEnterInfo: [],
+        //     avatarEnterInfo: avatarEnterInfo,
         //
         //     teamEnterInfo: {
         //         teamEntityId: 150995686,
@@ -254,6 +281,26 @@ class NetworkAdapter {
         // };
     }
 
+    /**
+     * Creates a 'PlayerEnterSceneNotify' packet.
+     * @param sceneToken The scene token for the packet.
+     */
+    enterSceneNotification(sceneToken: number): PlayerEnterSceneNotify {
+        const player: Player = this.getPlayer();
+        return {
+            sceneId: 3, // TODO: Specify the scene ID.
+            worldType: 1, // TODO: Specify the world type.
+            pos: player.info.position, // TODO: Get the player's last known position.
+            sceneBeginTime: Date.now(),
+            type: 1, // TODO: Specify the scene enter type.
+            targetUid: parseInt(player.info.uid),
+            enterSceneToken: sceneToken,
+            isFirstLoginEnterScene: true,
+            sceneTagIdList: [102, 107, 113, 117],
+            enterReason: 1
+        };
+    }
+    
     /**
      * Creates a 'PlayerDataNotify' packet.
      */
@@ -306,6 +353,11 @@ function defaultPlayerData(uid: string): Account {
             uid: uid,
             nickname: "User", signature: "",
             friends: [PlayerConstants.CONSOLE_USER], friendRequests: [],
+            position: {
+                X: 54.5,
+                Y: 272,
+                Z: -5
+            },
             gachaRspValue: 0
         },
         statistics: {

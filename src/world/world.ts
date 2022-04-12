@@ -21,6 +21,7 @@ import {Entity, SceneAvatar, Statistics, User} from "../utils/interfaces";
 import {SceneEntityAppearNotify, SceneTeamUpdateNotify} from "../utils/protocol";
 import {jsonToObject} from "../utils/packets";
 import {SceneAvatarGenerator} from "../player/generators";
+import ServerEntity from "./entity";
 
 class World {
     network: NetworkAdapter = new NetworkAdapter(this);
@@ -38,6 +39,7 @@ class World {
         // Assign the player entity IDs.
         for (let i = 0; i < 8; i++)
             player.entityIds[i] = this.entityManager.allocateEntityId();
+        
         // Enter the world as the player.
         this.entityManager.enter(player);
     }
@@ -184,15 +186,15 @@ class EntityManager {
      * @param entity The entity to add.
      * @param withPacket Should the server send a packet to the players?
      */
-    addEntity(entity: Entity, withPacket: boolean = false): number {
+    addEntity(entity: ServerEntity, withPacket: boolean = false): number {
         const entityId: number = this.nextEntityId++;
-        entity.entityId = entityId;
+        entity.setEntityId(entityId);
 
         this.entities[entityId] = entity;
 
         if (withPacket) {
             this.world.broadcastPacket("SceneEntityAppearNotify", <SceneEntityAppearNotify>{
-                entityList: [entity], appearType: 0, param: 16777459
+                entityList: [entity.getEntityData()], appearType: 0, param: 16777459
             });
         }
         return entityId;
@@ -213,6 +215,15 @@ class EntityManager {
         }
     }
 
+    /**
+     * Gets an entity by its entity ID.
+     * @param entityId The ID of the entity to get.
+     * @returns The entity, or null if it doesn't exist.
+     */
+    getEntityById(entityId: number): ServerEntity|undefined {
+        return this.entities[entityId];
+    }
+
     /*
      * Player methods.
      */
@@ -225,7 +236,7 @@ class EntityManager {
     enter(player: Player): object {
         const entityIds: number[] = player.entityIds;
         const generated: SceneAvatar = new SceneAvatarGenerator(player).build(0);
-        player.entityObj = generated.sceneEntityInfo;
+        player.setEntityData(generated.sceneEntityInfo);
         // TODO: Create proper scene team update notify packet.
         return {};
     }
@@ -255,6 +266,8 @@ class NetworkAdapter {
         return jsonToObject("SceneTeamUpdateNotify");
         // TODO: Implement Co-Op compatible team packets.
         // const avatars: SceneAvatar[] = [];
+        // for(let i = 0; i < 4; i++)
+        //     avatars.push(new SceneAvatarGenerator(<Player> this.world.getWorldHost(false)).build(i));
         // return {sceneTeamAvatarList: avatars};
     }
 }

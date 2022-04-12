@@ -107,9 +107,9 @@ export async function objectToBuffer(object: object, packetId: number) {
  * @param data The data received from the client.
  * @param packetId The packet ID relative to the data.
  */
-export async function packetToObject(data: any, packetId: number) {
+export async function packetToObject(data: any, packetId: number|string) {
     try {
-        let protoName = getFrameworkById(packetId);
+        let protoName = typeof packetId == "string" ? packetId : getFrameworkById(packetId);
         if (protoName == "None") {
             return protoName;
         }
@@ -119,7 +119,7 @@ export async function packetToObject(data: any, packetId: number) {
         // @ts-ignore
         return testMessage.decode(data);
     } catch (exception) {
-        console.log(`Error parsing packet ${getFrameworkById(packetId)}: Error: ${exception}`);
+        console.log(`Error parsing packet ${typeof packetId == "string" ? packetId : getFrameworkById(packetId)}: Error: ${exception}`);
     }
 }
 
