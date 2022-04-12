@@ -7,7 +7,7 @@ You can find the Open-Shen community [here](https://discord.gg/sJ7VatCYvZ)!
 ### Note: Open-Shen is still in development. Don't expect a ton of features. (_cough_ skids _cough_)
 
 # Features
-- [ ] Game login
+- [x] Game login
 - [ ] Multiple version support
     - [ ] Version cross-play
 - [ ] Server commands
