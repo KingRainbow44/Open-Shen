@@ -4,6 +4,8 @@ An open-source server software for a certain anime gaem.
 
 You can find the Open-Shen community [here](https://discord.gg/sJ7VatCYvZ)!
 
+### Note: Open-Shen is still in development. Don't expect a ton of features. (_cough_ skids _cough_)
+
 # Features
 - [ ] Game login
 - [ ] Multiple version support
@@ -25,4 +27,4 @@ You can find the Open-Shen community [here](https://discord.gg/sJ7VatCYvZ)!
   how to contribute.
 
 ### Disclaimer
-*Note: Open Shen is not affiliated with HoYoVerse or Cognosphere.*
+*Note: Open Shen is not affiliated with HoYoVerse or Cognosphere, if they wish to take this repository down, please contact me.*
