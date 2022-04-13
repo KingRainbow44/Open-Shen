@@ -37,6 +37,11 @@ export class ServerConstants {
         }
         return result;
     })();
+    
+    static readonly RECOGNIZED_PLUGIN_TYPES = [
+        "js", "ts", // One-file plugins.
+        "" // Directory based plugins.
+    ];
 }
 
 export class PlayerConstants {

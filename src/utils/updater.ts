@@ -79,7 +79,10 @@ export function createStructure(): void {
     // Configs directory.
     if(!existsSync(`${working}/configs`))
         mkdirSync(`${working}/configs`);
-    // Unknown directory
+    // Unknown directory.
     if(!existsSync(`${working}/unknown`))
         mkdirSync(`${working}/unknown`);
+    // Plugins directory.
+    if(!existsSync(`${working}/plugins`))
+        mkdirSync(`${working}/plugins`);
 }

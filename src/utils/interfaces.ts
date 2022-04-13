@@ -70,6 +70,13 @@ export interface GachaConfig {
     }
 }
 
+/* Plugin manifest file. */
+export interface PluginManifest {
+    name: string; description: string;
+    main: string; version: string;
+    author?: string|string[];
+}
+
 /*
  * Internal schemas.
  */

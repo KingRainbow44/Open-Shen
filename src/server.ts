@@ -25,18 +25,21 @@ import * as logger from "./utils/logger";
 import * as protocol from "./utils/packets";
 import * as utils from "./utils/utilities";
 import {readFileSync, writeFileSync} from "fs";
-import {createProviderInstance} from "./objects/provider"
+import {createProviderInstance} from "./objects/provider";
+import {createPluginManager} from "./plugin/plugin";
 import {base, config, working} from "./index";
 import udpServer from "./handlers/udp";
 
 import Player from "./player/player";
 import Handshake from "./objects/handshake";
+import {PluginManager} from "./plugin/plugin";
+import DataProvider from "./objects/provider";
 import {RemoteInfo} from "dgram";
 import {KCP} from "node-kcp-x";
-import DataProvider from "./objects/provider";
 
 export function terminate(): void {
-
+    // Shut down server execution.
+    server.shutdown(false);
 }
 
 /* Handling process termination. */
@@ -187,6 +190,7 @@ async function handlePacket(packetId: number, player: Player, data: any): Promis
 export default class Server {
     private readonly initialKey: Buffer = undefined;
     private readonly provider: DataProvider = undefined;
+    private readonly pluginManager: PluginManager = createPluginManager();
     private token: number = 0x00000000; // TODO: Determine if this needs to be moved to the player class.
     private players: object = {};
 
@@ -197,13 +201,30 @@ export default class Server {
         // The initial XOR key for the game (2.0-2.6).
         this.initialKey = Buffer.from(readFileSync(`${base}/resources/initial-key.bin`).toString(), "base64");
         // This loads the data required for handling the specified version.
-        this.versionData = <Version>require(`${working}/versions/${config.server.clientVersion}.json`);
+        this.versionData = <Version> require(`${working}/versions/${config.server.clientVersion}.json`);
         
-        // TODO: Call after loading all plugins (when implemented).
+        // Load plugins.
+        this.pluginManager.registerAllPlugins();
+        
         // Create a data provider instance.
         this.provider = createProviderInstance();
         // Initialize the data provider.
         this.provider.initializeDatabase();
+        
+        // Enable all plugins.
+        this.pluginManager.enableAllPlugins();
+    }
+
+    /**
+     * Disables most of the server's features.
+     * Should be called before shutdown.
+     */
+    shutdown(exit: boolean = true): void {
+        // Disable all plugins.
+        this.pluginManager.disableAllPlugins();
+        
+        // Exit process if requested.
+        exit && process.exit(0);
     }
 
     /**
