@@ -17,6 +17,7 @@
  */
 
 import {PlayerLoginResponse} from "./protocol";
+import Plugin from "../plugin/plugin";
 
 /*
  * Configuration schemas.
@@ -106,6 +107,11 @@ export interface MotionInfo {
     state: number; refId: number;
     sceneTime: number;
     internalVelocity: number;
+}
+
+export interface PluginObject {
+    plugin: Plugin;
+    manifest: PluginManifest;
 }
 
 /* 

@@ -20,7 +20,7 @@ import {lstatSync, readdirSync, Stats} from "fs";
 
 import Server, {server} from "../server";
 import {working} from "../index";
-import {PluginManifest} from "../utils/interfaces";
+import {PluginManifest, PluginObject} from "../utils/interfaces";
 
 import * as logger from "../utils/logger";
 import {Color} from "../utils/constants";
@@ -71,7 +71,7 @@ export default Plugin;
  * Manages plugins and their lifecycle.
  */
 export class PluginManager {
-    readonly plugins: Plugin[];
+    readonly plugins: PluginObject[] = [];
 
     /**
      * Read all plugins in the plugins directory and register them.
@@ -85,8 +85,8 @@ export class PluginManager {
             if(fileData.isDirectory()) {
                 const manifest: PluginManifest = require(`${pluginPath}/manifest.json`);
                 const pluginClass: any = require(`${pluginPath}/${manifest.main}`);
-                this.registerPlugin(pluginClass.default);
-            } else this.registerPlugin(require(pluginPath).default);
+                this.registerPlugin(pluginClass, manifest);
+            } else this.registerPlugin(require(pluginPath));
         }
     }
 
@@ -94,21 +94,26 @@ export class PluginManager {
      * Registers a plugin to the server.
      * @param baseClass The base class from {@link require}
      */
-    registerPlugin(baseClass: any): void {
-        const plugin: Plugin = new baseClass(server);
-        const manifest: PluginManifest = plugin.manifest();
-        
-        this.plugins.push(plugin);
-        logger.info(Color.DEFAULT(), `Loading plugin ${manifest.name} v${manifest.version}`);
-        plugin.load();
+    registerPlugin(baseClass: any, manifest?: PluginManifest): void {
+        try {
+            const plugin: Plugin = new baseClass(server);
+            manifest = manifest || plugin.manifest();
+
+            this.plugins.push({plugin: plugin, manifest: manifest});
+            logger.info(Color.DEFAULT(), `Loading plugin '${manifest.name}' v${manifest.version}...`);
+            plugin.load();
+        } catch (error: any) {
+            console.error("Unable to load a plugin.", error);
+        }
     }
 
     /**
      * Enables all plugins before loading plugin-modifiable systems.
      */
     enableAllPlugins(): void {
-        for(const plugin of this.plugins) {
-            logger.info(Color.DEFAULT(), `Enabling plugin ${plugin.manifest().name}`);
+        for(const object of this.plugins) {
+            const plugin: Plugin = object.plugin; const manifest: PluginManifest = object.manifest;
+            logger.info(Color.DEFAULT(), `Enabling plugin '${manifest.name}'...`);
             plugin.enable();
         }
     }
@@ -117,8 +122,9 @@ export class PluginManager {
      * Disables all plugins before the server shuts down.
      */
     disableAllPlugins(): void {
-        for(const plugin of this.plugins) {
-            logger.info(Color.DEFAULT(), `Disabling plugin ${plugin.manifest().name}`);
+        for(const object of this.plugins) {
+            const plugin: Plugin = object.plugin; const manifest: PluginManifest = object.manifest;
+            logger.info(Color.DEFAULT(), `Disabling plugin '${manifest.name}'...`);
             plugin.disable();
         }
     }
