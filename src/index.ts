@@ -32,10 +32,11 @@ process.on('uncaughtException', (error: any) => {
 /* Dynamic imports. */
 import {copyFileSync, existsSync} from "fs";
 import {createStructure, updateConfig} from "./utils/updater";
-import {ServerConstants} from "./utils/constants";
+import {Color, ServerConstants} from "./utils/constants";
 
 /* Override 'console' methods. */
-import "./utils/logger";
+import * as logger from "./utils/logger";
+logger.info(Color.DEFAULT(), "Open Shen is starting...");
 
 /* Declare server config. */
 import {Config} from "./utils/interfaces";

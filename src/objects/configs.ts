@@ -49,6 +49,6 @@ export default class ConfigLoader {
     gachaConfig: GachaConfig;
 
     constructor() {
-        this.gachaConfig = <GachaConfig>readConfig("gacha");
+        this.gachaConfig = <GachaConfig> readConfig("gacha");
     }
 }
