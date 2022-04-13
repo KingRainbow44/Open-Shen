@@ -17,11 +17,11 @@
  */
 
 import Player from "../../player/player";
+import World from "../../world/world";
+import ServerEntity from "../../world/entity";
 import {CombatInvocationsNotify, EntityMoveInfo} from "../../utils/protocol";
 import {InvocationArguments} from "../../utils/constants";
 import * as protocol from "../../utils/packets";
-import World from "../../world/world";
-import ServerEntity from "../../world/entity";
 
 export default async function (data: CombatInvocationsNotify, player: Player) {
     for(const invoke of data.invokeList) {
