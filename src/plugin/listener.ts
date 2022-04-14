@@ -19,5 +19,5 @@
 import {ReceivePacketEvent} from "./event";
 
 export default interface EventListener {
-    onPacketReceive?(event: ReceivePacketEvent): void;
+    onReceivePacket?(event: ReceivePacketEvent): void;
 }

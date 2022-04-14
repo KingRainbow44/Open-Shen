@@ -36,6 +36,7 @@ import {PluginManager} from "./plugin/plugin";
 import DataProvider from "./objects/provider";
 import {RemoteInfo} from "dgram";
 import {KCP} from "node-kcp-x";
+import {ReceivePacketEvent} from "./plugin/event";
 
 export function terminate(): void {
     // Shut down server execution.
@@ -213,6 +214,9 @@ export default class Server {
         
         // Enable all plugins.
         this.pluginManager.enableAllPlugins();
+        
+        // DEBUG: REMOVE LATER
+        this.pluginManager.invokeListeners(new ReceivePacketEvent(1, "0", undefined, undefined))
     }
 
     /**
@@ -240,6 +244,13 @@ export default class Server {
      */
     getDataProvider(): DataProvider {
         return this.provider;
+    }
+
+    /**
+     * Returns the server's plugin manager.
+     */
+    getPluginManager(): PluginManager {
+        return this.pluginManager;
     }
 
     /**

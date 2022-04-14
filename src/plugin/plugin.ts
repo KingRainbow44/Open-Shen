@@ -16,9 +16,10 @@
  * credit is given to the original author(s).
  */
 
-import {lstatSync, readdirSync, Stats} from "fs";
+import {lstatSync, Stats, readdirSync} from "fs";
 
 import Server, {server} from "../server";
+import Event from "./event";
 import {working} from "../index";
 import {PluginManifest, PluginObject} from "../utils/interfaces";
 
@@ -64,15 +65,46 @@ abstract class Plugin {
      */
     disable(): void { };
 }
-
 export default Plugin;
+
+/**
+ * Injects methods & properties into the specified class.
+ * @param plugin The plugin to inject into.
+ */
+function pluginInjector(plugin: any): void {
+    // 'getServer(): Server' method.
+    plugin.server = server;
+}
 
 /**
  * Manages plugins and their lifecycle.
  */
 export class PluginManager {
     readonly plugins: PluginObject[] = [];
+    readonly listeners: any[] = [];
 
+    /**
+     * Registers all event listeners in a file to the server.
+     * @param listener The result of `require()`'ing a listener.
+     */
+    registerEvents(listener: any): void {
+        this.listeners.push(listener);
+    }
+
+    /**
+     * Push the event to all listeners.
+     * @param event The event to call.
+     */
+    invokeListeners(event: Event): void {
+        const eventName: string = event.constructor.name.split("Event")[0];
+        const listeners: any[] = this.listeners.filter(listener => listener.events.includes(eventName));
+        listeners.forEach(listener => console.log(listener.exports));
+    }
+    
+    /*
+     * Plugin loading.
+     */
+    
     /**
      * Read all plugins in the plugins directory and register them.
      */
@@ -101,7 +133,8 @@ export class PluginManager {
 
             this.plugins.push({plugin: plugin, manifest: manifest});
             logger.info(Color.DEFAULT(), `Loading plugin '${manifest.name}' v${manifest.version}...`);
-            plugin.load();
+            pluginInjector(plugin); // Inject critical methods into the plugin.
+            plugin.load(); // Load the plugin after injecting methods.
         } catch (error: any) {
             console.error("Unable to load a plugin.", error);
         }

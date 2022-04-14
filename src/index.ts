@@ -55,6 +55,10 @@ createStructure();
 import ConfigLoader from "./objects/configs";
 export const configs: ConfigLoader = new ConfigLoader();
 
+/* Declare the API path. */
+import {join} from "path";
+global.openshen = join(__dirname, "api", "openshen");
+
 /* Start handlers. */
 import "./handlers/udp";
 import "./handlers/http";
