@@ -72,8 +72,10 @@ export default Plugin;
  * @param plugin The plugin to inject into.
  */
 function pluginInjector(plugin: any): void {
-    // 'getServer(): Server' method.
-    plugin.server = server;
+    // 'registerEvents' method.
+    plugin.registerEvents = function (listener: Event): void {
+        pluginManager.registerEvents(listener);
+    };
 }
 
 /**
@@ -97,8 +99,16 @@ export class PluginManager {
      */
     invokeListeners(event: Event): void {
         const eventName: string = event.constructor.name.split("Event")[0];
-        const listeners: any[] = this.listeners.filter(listener => listener.events.includes(eventName));
-        listeners.forEach(listener => console.log(listener.exports));
+        const invokeMethod: string = `on${eventName}`;
+        try {
+            console.log(eventName);
+            this.listeners.forEach(listener => {
+                const method: any = listener[invokeMethod];
+                if(method) method(event);
+            });
+        } catch (error: any) {
+            console.error(error);
+        }
     }
     
     /*
@@ -162,10 +172,11 @@ export class PluginManager {
         }
     }
 }
+const pluginManager: PluginManager = new PluginManager();
 
 /**
  * Creates a plugin manager instance.
  */
 export function createPluginManager(): PluginManager {
-    return new PluginManager();
+    return pluginManager;
 }

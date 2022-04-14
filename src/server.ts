@@ -19,7 +19,6 @@
 /**
  * Called before the process closes.
  */
-import {Version} from "./utils/interfaces";
 /* Imports. */
 import * as logger from "./utils/logger";
 import * as protocol from "./utils/packets";
@@ -35,8 +34,8 @@ import Handshake from "./objects/handshake";
 import {PluginManager} from "./plugin/plugin";
 import DataProvider from "./objects/provider";
 import {RemoteInfo} from "dgram";
+import {Version} from "./utils/interfaces";
 import {KCP} from "node-kcp-x";
-import {ReceivePacketEvent} from "./plugin/event";
 
 export function terminate(): void {
     // Shut down server execution.
@@ -202,21 +201,18 @@ export default class Server {
         // The initial XOR key for the game (2.0-2.6).
         this.initialKey = Buffer.from(readFileSync(`${base}/resources/initial-key.bin`).toString(), "base64");
         // This loads the data required for handling the specified version.
-        this.versionData = <Version> require(`${working}/versions/${config.server.clientVersion}.json`);
-        
+        this.versionData = <Version>require(`${working}/versions/${config.server.clientVersion}.json`);
+
         // Load plugins.
         this.pluginManager.registerAllPlugins();
-        
+
         // Create a data provider instance.
         this.provider = createProviderInstance();
         // Initialize the data provider.
         this.provider.initializeDatabase();
-        
+
         // Enable all plugins.
         this.pluginManager.enableAllPlugins();
-        
-        // DEBUG: REMOVE LATER
-        this.pluginManager.invokeListeners(new ReceivePacketEvent(1, "0", undefined, undefined))
     }
 
     /**
@@ -297,3 +293,7 @@ export default class Server {
 
 /* The Open-Shen server instance. */
 export const server: Server = new Server();
+/* Singleton method. */
+export function getInstance(): Server {
+    return server;
+}
