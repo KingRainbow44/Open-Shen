@@ -5,6 +5,7 @@ An open-source server software for a certain anime gaem.
 You can find the Open-Shen community [here](https://discord.gg/sJ7VatCYvZ)!
 
 ### Note: Open-Shen is still in development. Don't expect a ton of features. (_cough_ skids _cough_)
+We **provide** the _underlying codebase_ for a server, **not** the _data needed_ to run it.
 
 # Features
 - [x] Game login
