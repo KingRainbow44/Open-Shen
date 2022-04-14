@@ -58,5 +58,6 @@ export const configs: ConfigLoader = new ConfigLoader();
 /* Start handlers. */
 import "./handlers/udp";
 import "./handlers/http";
+import "./handlers/command";
 /* Create server instance. */
 import "./server";
