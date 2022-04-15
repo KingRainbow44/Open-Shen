@@ -16,12 +16,12 @@
  * credit is given to the original author(s).
  */
 
-/**
- * The base class for Bridge's commands.
- */
 import Player from "../player/player";
 import {info} from "../utils/logger";
 
+/**
+ * The base class for Open Shen's commands.
+ */
 abstract class Command {
     label: string;
     description: string;

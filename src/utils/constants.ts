@@ -37,6 +37,11 @@ export class ServerConstants {
         }
         return result;
     })();
+    
+    static readonly RECOGNIZED_PLUGIN_TYPES = [
+        "js", "ts", // One-file plugins.
+        "" // Directory based plugins.
+    ];
 }
 
 export class PlayerConstants {
@@ -311,6 +316,25 @@ export class GeneratorConstants {
             abilityInfo: {}
         }
     };
+}
+
+export class InvocationArguments {
+    static readonly COMBAT_NONE = 0;
+    static readonly COMBAT_EVT_BEING_HIT = 1;
+    static readonly COMBAT_ANIMATOR_STATE_CHANGED = 2;
+    static readonly COMBAT_FACE_TO_DIR = 3;
+    static readonly COMBAT_SET_ATTACK_TARGET = 4;
+    static readonly COMBAT_RUSH_MOVE = 5;
+    static readonly COMBAT_ANIMATOR_PARAMETER_CHANGED = 6;
+    static readonly ENTITY_MOVE = 7;
+    static readonly SYNC_ENTITY_POSITION = 8;
+    static readonly COMBAT_STEER_MOTION_INFO = 9;
+    static readonly COMBAT_FORCE_SET_POS_INFO = 10;
+    static readonly COMBAT_COMPENSATE_POS_DIFF = 11;
+    static readonly COMBAT_MONSTER_DO_BLINK = 12;
+    static readonly COMBAT_FIXED_RUSH_MOVE = 13;
+    static readonly COMBAT_SYNC_TRANSFORM = 14;
+    static readonly COMBAT_LIGHT_CORE_MOVE = 15;
 }
 
 export class Color {

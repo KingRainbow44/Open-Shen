@@ -45,32 +45,34 @@ export function updateConfig(): void {
 
 /* Structure creator. */
 export function createStructure(): void {
+    let exit: boolean = false;
+    
     // Certificates directory.
     if(!existsSync(`${working}/certs`)) {
         mkdirSync(`${working}/certs`);
         console.warn(`Before running, add certificates to the '${working}/certs' directory.`);
-        process.exit(0);
+        exit = true;
     }
     
     // Versions directory.
     if(!existsSync(`${working}/versions`)) {
         mkdirSync(`${working}/versions`);
         console.warn(`Before running, add a version to the '${working}/versions' directory.`);
-        process.exit(0);
+        exit = true;
     }
     
     // Protocol directory.
     if(!existsSync(`${working}/protocol`)) {
         mkdirSync(`${working}/protocol`);
         console.warn(`Before running, add '.proto' files to the '${working}/protocol' directory.`);
-        process.exit(0);
+        exit = true;
     }
     
     // Packets directory.
     if(!existsSync(`${working}/packets`)) {
         mkdirSync(`${working}/packets`); mkdirSync(`${working}/rawPackets`);
         console.warn(`Before running, add '.json' files to the '${working}/packets' directory.`);
-        process.exit(0);
+        exit = true;
     }
     
     // Logs directory.
@@ -79,7 +81,12 @@ export function createStructure(): void {
     // Configs directory.
     if(!existsSync(`${working}/configs`))
         mkdirSync(`${working}/configs`);
-    // Unknown directory
+    // Unknown directory.
     if(!existsSync(`${working}/unknown`))
         mkdirSync(`${working}/unknown`);
+    // Plugins directory.
+    if(!existsSync(`${working}/plugins`))
+        mkdirSync(`${working}/plugins`);
+    
+    if(exit) process.exit(0);
 }

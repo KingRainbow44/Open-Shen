@@ -20,7 +20,11 @@ import {info} from "../utils/logger";
 import Player from "../player/player";
 import Command from "../objects/command";
 
-const commands: object = {};
+import SupportCommand from "../commands/support";
+
+const commands: object = {
+    support: new SupportCommand()
+};
 
 const stdin = process.openStdin();
 stdin.addListener('data', data => handleCommand(data.toString().trim()));

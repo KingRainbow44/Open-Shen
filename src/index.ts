@@ -19,7 +19,7 @@
 /* Run mode. none = normal; precompile = from source */
 export const mode: string = process.argv[2] || "none";
 /* The current working directory. */
-export const working: string = mode == "precompile" ? process.env["WORKING_DIRECTORY"] : process.cwd();
+export const working: string = mode == "precompile" ? (process.env["WORKING_DIRECTORY"] || process.cwd()) : process.cwd();
 /* The application files directory. */
 export const base: string = `${__dirname}/..`;
 
@@ -32,10 +32,11 @@ process.on('uncaughtException', (error: any) => {
 /* Dynamic imports. */
 import {copyFileSync, existsSync} from "fs";
 import {createStructure, updateConfig} from "./utils/updater";
-import {ServerConstants} from "./utils/constants";
+import {Color, ServerConstants} from "./utils/constants";
 
 /* Override 'console' methods. */
-import "./utils/logger";
+import * as logger from "./utils/logger";
+logger.info(Color.DEFAULT(), "Open Shen is starting...");
 
 /* Declare server config. */
 import {Config} from "./utils/interfaces";
@@ -57,5 +58,6 @@ export const configs: ConfigLoader = new ConfigLoader();
 /* Start handlers. */
 import "./handlers/udp";
 import "./handlers/http";
+import "./handlers/command";
 /* Create server instance. */
 import "./server";

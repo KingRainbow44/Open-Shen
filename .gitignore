@@ -12,3 +12,15 @@ tsconfig.tsbuildinfo
 
 # pkg Builds
 build/
+
+# Running in this directory
+certs/
+logs/
+plugins/
+configs/
+packets/
+protocol/
+rawPackets/
+unknown/
+versions/
+config.json

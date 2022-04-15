@@ -107,9 +107,9 @@ export async function objectToBuffer(object: object, packetId: number) {
  * @param data The data received from the client.
  * @param packetId The packet ID relative to the data.
  */
-export async function packetToObject(data: any, packetId: number) {
+export async function packetToObject(data: any, packetId: number|string) {
     try {
-        let protoName = getFrameworkById(packetId);
+        let protoName = typeof packetId == "string" ? packetId : getFrameworkById(packetId);
         if (protoName == "None") {
             return protoName;
         }
@@ -119,7 +119,7 @@ export async function packetToObject(data: any, packetId: number) {
         // @ts-ignore
         return testMessage.decode(data);
     } catch (exception) {
-        console.log(`Error parsing packet ${getFrameworkById(packetId)}: Error: ${exception}`);
+        console.log(`Error parsing packet ${typeof packetId == "string" ? packetId : getFrameworkById(packetId)}: Error: ${exception}`);
     }
 }
 
@@ -219,8 +219,8 @@ export function getPackets(data: Buffer, length: number = 28): Buffer[] {
  * @param binaryName The binary of the file to convert.
  * @param packetId The packet ID of the associated binary. (optional).
  */
-export function binaryToObject(binaryName: string, packetId: number = undefined): object {
-    return packetToObject(
+export async function binaryToObject(binaryName: string, packetId: number = undefined): Promise<object> {
+    return await packetToObject(
         readFileSync(`${working}/rawPackets/${binaryName}.bin`),
         packetId ?? getIdFromFramework(binaryName)
     );

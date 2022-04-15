@@ -38,7 +38,7 @@ export default async function (data, player: Player): Promise<void> {
     player.sendPacket("AvatarEquipChangeNotify", jsonToObject("AvatarEquipChangeNotify2"));
     player.sendPacket("HostPlayerNotify", world.getWorldHost());
     player.sendPacket("ScenePlayerInfoNotify", world.toScenePlayerInfo());
-    player.sendPacket("PlayerEnterSceneInfoNotify", player.network.enterSceneNotification(3495));
+    player.sendPacket("PlayerEnterSceneInfoNotify", player.network.enterSceneInfoNotification(3495));
     player.sendPacket("SyncTeamEntityNotify", {sceneId: 3}); // Temporarily hardcoded.
     player.sendPacket("SyncScenePlayTeamEntityNotify", {sceneId: 3}); // Temporarily hardcoded.
     player.sendPacket("ScenePlayBattleInfoListNotify");

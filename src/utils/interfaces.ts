@@ -17,6 +17,7 @@
  */
 
 import {PlayerLoginResponse} from "./protocol";
+import Plugin from "../plugin/plugin";
 
 /*
  * Configuration schemas.
@@ -70,6 +71,13 @@ export interface GachaConfig {
     }
 }
 
+/* Plugin manifest file. */
+export interface PluginManifest {
+    name: string; description: string;
+    main: string; version: string;
+    author?: string|string[];
+}
+
 /*
  * Internal schemas.
  */
@@ -93,6 +101,19 @@ export interface Vector {
     Z: number;
 }
 
+export interface MotionInfo {
+    pos: Vector; rot: Vector; speed: Vector;
+    params: Vector[]; refPos: Vector;
+    state: number; refId: number;
+    sceneTime: number;
+    internalVelocity: number;
+}
+
+export interface PluginObject {
+    plugin: Plugin;
+    manifest: PluginManifest;
+}
+
 /* 
  * Data schemas. 
  */
@@ -106,10 +127,11 @@ export interface Account {
 
 export interface User {
     uid: string; // The player's unique identifier.
-    nickname: string,
-    signature: string;
-    friends: Friend[];
-    friendRequests: Friend[];
+    nickname: string; // The player's display name.
+    signature: string; // The player's "description".
+    friends: Friend[]; // The player's friends.
+    friendRequests: Friend[]; // Incoming friend requests for the player.
+    position: Vector; // The player's last-known position.
 
     // Debug values.
     gachaRspValue: number;
@@ -310,4 +332,19 @@ export interface Excel {
     controllerPathHash: string;
     controllerPathRemoteHash: string;
     combatConfigHash: string;
+}
+
+export interface UnionCommand {
+    messageId: number;
+    body: Buffer;
+}
+
+/*
+ * Union Command Schemas
+ */
+
+export interface CombatInvokeEntry {
+    argumentType: number;
+    forwardType: number;
+    combatData: Buffer;
 }

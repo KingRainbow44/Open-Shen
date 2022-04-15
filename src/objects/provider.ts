@@ -40,7 +40,7 @@ export default interface DataProvider {
 }
 
 const registeredProviders: object = {
-    sqlite3: `${base}/src/objects/providers/sqlite3`
+    sqlite3: require("./providers/sqlite3")
 };
 
 /**
@@ -53,7 +53,7 @@ export function createProviderInstance(): DataProvider {
     
     let dataProvider: DataProvider;
     try {
-        let provider: any = require(registeredProviders[providerName]).default;
+        let provider: any = registeredProviders[providerName].default;
         dataProvider = new provider(providerCredentials);
     } catch (error: any) {
         console.error(`Failed to create data provider instance.`, error);

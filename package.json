@@ -1,7 +1,7 @@
 {
   "name": "open-shen",
   "description": "An open-source server software for a certain anime game.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   
   "main": "src/index.ts",
   "bin": "src/index.js",
@@ -31,11 +31,19 @@
     "assets": [
       "resources/default-configs/*.json",
       "resources/static/*.ejs",
-      "resources/**"
+      "resources/**",
+      
+      "node_modules/**/*"
+    ],
+    "scripts": [
+      "src/packets/*.js",
+      "src/packets/union/*.js"
     ],
     "outputPath": "build",
     "targets": [
-      "node16-windows-x64"
+      "node16-windows-x64",
+      "node16-linux-x64",
+      "node16-linux-arm64"
     ]
   }
 }

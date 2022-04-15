@@ -16,7 +16,16 @@
  * credit is given to the original author(s).
  */
 
-import {Character, Entity, GachaItemEntry, ItemEntry, SceneAvatar, Vector} from "./interfaces";
+import {
+    Character,
+    CombatInvokeEntry,
+    Entity,
+    GachaItemEntry,
+    ItemEntry, MotionInfo,
+    SceneAvatar,
+    UnionCommand,
+    Vector
+} from "./interfaces";
 
 /*
  * Genshin Impact Packets
@@ -161,6 +170,45 @@ export interface PlayerEnterSceneInfoNotify {
     };
 }
 
+export interface PlayerEnterSceneNotify {
+    sceneId: number;
+    pos: Vector;
+    sceneBeginTime: number;
+    type: number;
+    targetUid: number;
+    prevSceneId?: number;
+    prevPos?: Vector;
+    dungeonId?: number;
+    worldLevel?: number;
+    enterSceneToken: number;
+    isFirstLoginEnterScene: boolean;
+    sceneTagIdList: number[];
+    isSkipUi?: boolean;
+    enterReason: number;
+    worldType: number;
+    sceneTransaction?: string;
+}
+
 export interface SceneTeamUpdateNotify {
     sceneTeamAvatarList: SceneAvatar[];
+}
+
+export interface UnionCmdNotify {
+    cmdList: UnionCommand[];
+}
+
+/* 
+ * Union Command Notify Definitions 
+ */
+
+export interface CombatInvocationsNotify {
+    invokeList: CombatInvokeEntry[];
+}
+
+export interface EntityMoveInfo {
+    entityId: number;
+    motionInfo: MotionInfo;
+    sceneTime: number;
+    reliableSeq: number;
+    isReliable: boolean;
 }
