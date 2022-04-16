@@ -85,10 +85,18 @@ export function debug(color: string | number, message: string, ...args: any[]): 
  * @param args Other objects to log.
  */
 export function verbose(color: string | number, message: string, ...args: any[]): void {
-    logToFile(`[VERBOSE] ${formatDate(Date.now())}: ${args.length > 0 ? message + args.join(" ") : message}`, `latest`, true)
+    logToFile(`[VERBOSE] ${formatDate(Date.now())}: ${args.length > 0 ? message + args.join(" ") : message}`, `latest`, true);
     if (config.debug.enableDebug && config.debug.debugLevel > 1) {
         logger(`\x1b[${color}m${"[VERBOSE] " + message}\x1b[0m`, ...args);
     }
+}
+
+/**
+ * Dumps an object to the console & logs it to the log.
+ * @param message The object to log.
+ */
+export function dump(message: object): void {
+    logger(message); // Dumps the object to the console.
 }
 
 /**
