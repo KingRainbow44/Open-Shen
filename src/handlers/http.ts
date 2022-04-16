@@ -21,12 +21,13 @@ import * as http from "http";
 import * as https from "https";
 import {handleUnrouted} from "../http/static";
 import {Color} from "../utils/constants";
-import {info} from "../utils/logger";
+import {info, logToFile} from "../utils/logger";
 import {working} from "../index";
 import {readFileSync} from "fs";
 
 import * as versionRoutes from "../http/version";
 import {logRequest} from "../http/utils";
+import {formatDate} from "../utils/utilities";
 
 /* Create an express instance. */
 const app: Express = express();
@@ -34,8 +35,10 @@ const app: Express = express();
 app.use("/", logRequest);
 
 /* Route specific URLs to methods. */
-app.post("/crash/dataUpload", (request: Request, response: Response) => {
-    console.warn("The client has crashed:", request.body); // TODO: Log crash dumps.
+app.post("/crash/dataUpload", express.json(), (request: Request, response: Response) => {
+    logToFile(JSON.stringify(request.body[0]), `crash-${formatDate(Date.now())}`, false, "crash");
+    console.warn("The client has crashed. Find the crash dump in the logs folder.");
+    response.status(200).send('{"retcode":0,"code":0"}');
 });
 app.get("/region", versionRoutes.regionQuery);
 
