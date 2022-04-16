@@ -21,7 +21,7 @@ import Player from "../player/Player";
 export default async function (data, player: Player): Promise<void> {
     // TODO: Implement chatting.
     return await player.sendPacket("PullRecentChatRsp", {
-        retcode: 1, chatInfo: [
+        retcode: 0, chatInfo: [
             {
                 time: Date.now(),
                 uid: 1337,
