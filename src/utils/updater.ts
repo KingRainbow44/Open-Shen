@@ -21,6 +21,7 @@ import {Config} from "./interfaces";
 import {base, config, working} from "../index";
 import {ServerConstants} from "./constants";
 import {copyFileSync, writeFileSync, mkdirSync, existsSync} from "fs";
+import {createFileSync} from "fs-extra";
 
 /* Config updater. */
 export function updateConfig(): void {
@@ -87,6 +88,14 @@ export function createStructure(): void {
     // Plugins directory.
     if(!existsSync(`${working}/plugins`))
         mkdirSync(`${working}/plugins`);
+    
+    // Create server files.
+    if(!existsSync(`${working}/certs/certificate.pem`))
+        createFileSync(`${working}/certs/certificate.pem`);
+    if(!existsSync(`${working}/certs/private-key.pem`))
+        createFileSync(`${working}/certs/private-key.pem`);
+    if(!existsSync(`${working}/versions/${config.server.clientVersion}.json`))
+        createFileSync(`${working}/versions/${config.server.clientVersion}.json`);
     
     if(exit) process.exit(0);
 }
