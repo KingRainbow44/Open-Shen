@@ -19,7 +19,7 @@
 /* Run mode. none = normal; precompile = from source */
 export const mode: string = process.argv[2] || "none";
 /* The current working directory. */
-export const working: string = mode == "precompile" ? process.env["WORKING_DIRECTORY"] : process.cwd();
+export const working: string = mode == "precompile" ? (process.env["WORKING_DIRECTORY"] || process.cwd()) : process.cwd();
 /* The application files directory. */
 export const base: string = `${__dirname}/..`;
 
