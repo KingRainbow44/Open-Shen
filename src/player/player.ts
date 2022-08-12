@@ -88,7 +88,7 @@ export default class Player extends ServerEntity {
      */
     async sendPacket(framework: string, packet: object = undefined): Promise<void> {
         if (packet == undefined) {
-            packet = config.debug.useRawPackets ? binaryToObject(framework) : jsonToObject(framework);
+            packet = config.debug.useRawPackets ? await binaryToObject(framework) : jsonToObject(framework);
         }
 
         // Dump packet content if in verbose mode with a high enough debug level.

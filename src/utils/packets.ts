@@ -219,8 +219,8 @@ export function getPackets(data: Buffer, length: number = 28): Buffer[] {
  * @param binaryName The binary of the file to convert.
  * @param packetId The packet ID of the associated binary. (optional).
  */
-export function binaryToObject(binaryName: string, packetId: number = undefined): object {
-    return packetToObject(
+export async function binaryToObject(binaryName: string, packetId: number = undefined): Promise<object> {
+    return await packetToObject(
         readFileSync(`${working}/rawPackets/${binaryName}.bin`),
         packetId ?? getIdFromFramework(binaryName)
     );
